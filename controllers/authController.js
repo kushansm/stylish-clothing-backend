@@ -12,7 +12,7 @@ export const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await User.create({ name, email, password: hashedPassword });
 
-        newUser.password = undefined; // 🚫 Don’t send password back
+        newUser.password = undefined; //  Don’t send password back
         res.status(201).json({ message: "User registered", user: newUser });
     } catch (err) {
         res.status(500).json({ message: err.message });
