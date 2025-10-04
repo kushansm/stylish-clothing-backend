@@ -1,15 +1,10 @@
+// routes/orderRoutes.js
 import express from "express";
-import { checkout } from "../controllers/orderController.js";
 import { protect } from "../middleware/authMiddleware.js";
+import { placeOrder } from "../controllers/orderController.js";
 
 const router = express.Router();
 
-// Checkout route
-router.post("/checkout", protect, checkout);
-
-// Test route
-router.get("/", (req, res) => {
-    res.send("Order route working");
-});
+router.post("/checkout", protect, placeOrder);
 
 export default router;
