@@ -3,7 +3,10 @@ import { getProducts, getProductById } from "../controllers/productController.js
 
 const router = express.Router();
 
-router.get("/", getProducts); // all products with filters
-router.get("/:id", getProductById); // single product detail
+// Get all products (with filters & pagination)
+router.get("/", getProducts);
+
+// Get single product by ID
+router.get("/:id", getProductById);
 
 export default router;
