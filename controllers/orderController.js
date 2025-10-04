@@ -4,8 +4,9 @@ import Order from "../models/Order.js";
 export const checkout = async (req, res) => {
     try {
         const userId = req.user;
-        const user = await User.findById(userId).populate("cart.product");
+        const { shippingAddress, paymentMethod } = req.body;
 
+        const user = await User.findById(userId).populate("cart.product");
         if (!user || user.cart.length === 0) {
             return res.status(400).json({ message: "Cart is empty" });
         }
@@ -27,9 +28,12 @@ export const checkout = async (req, res) => {
             items: orderItems,
             total: totalPrice,
             status: "Pending",
+            paymentStatus: "Pending",
+            shippingAddress,
+            paymentMethod: paymentMethod || "Cash on Delivery",
         });
 
-        // Empty the cart after checkout
+        // Empty cart after checkout
         user.cart = [];
         await user.save();
 
